@@ -3,27 +3,48 @@
 import { useState, type FormEvent } from "react";
 import { CONTACT } from "@/lib/constants";
 
+type Status = "idle" | "sending" | "success" | "error";
+
 export default function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [message, setMessage] = useState("");
   const [website, setWebsite] = useState("");
+  const [startedAt] = useState(() => Date.now());
+  const [status, setStatus] = useState<Status>("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    // honeypot: campo invisível para humanos, só bots preenchem
-    if (website) return;
-    const subject = encodeURIComponent(`Contato via site — ${name || "Cliente"}`);
-    const bodyLines = [
-      `Nome: ${name}`,
-      `E-mail: ${email}`,
-      whatsapp ? `WhatsApp: ${whatsapp}` : null,
-      "",
-      message,
-    ].filter(Boolean);
-    const body = encodeURIComponent(bodyLines.join("\n"));
-    window.location.href = `mailto:${CONTACT.email}?subject=${subject}&body=${body}`;
+    if (website) return; // honeypot
+
+    setStatus("sending");
+    setErrorMsg("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, whatsapp, message, website, startedAt }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setStatus("error");
+        setErrorMsg(data.error || "Não foi possível enviar agora.");
+        return;
+      }
+
+      setStatus("success");
+      setName("");
+      setEmail("");
+      setWhatsapp("");
+      setMessage("");
+    } catch {
+      setStatus("error");
+      setErrorMsg("Não foi possível enviar agora. Verifique sua conexão.");
+    }
   }
 
   return (
@@ -114,7 +135,8 @@ export default function Contact() {
 
             <button
               type="submit"
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-semibold text-espresso transition-colors hover:bg-gold-light"
+              disabled={status === "sending"}
+              className="mt-6 inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-semibold text-espresso transition-colors hover:bg-gold-light disabled:opacity-60"
             >
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
                 <path
@@ -125,8 +147,19 @@ export default function Contact() {
                   strokeLinejoin="round"
                 />
               </svg>
-              Enviar
+              {status === "sending" ? "Enviando..." : "Enviar"}
             </button>
+
+            {status === "success" && (
+              <p className="mt-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-300">
+                Mensagem enviada com sucesso! Em breve entramos em contato.
+              </p>
+            )}
+            {status === "error" && (
+              <p className="mt-4 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+                {errorMsg}
+              </p>
+            )}
           </form>
 
           <div className="flex flex-col gap-4">
