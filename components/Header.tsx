@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { MERCADO_LIVRE } from "@/lib/constants";
 
 const NAV_LINKS = [
   { href: "#inicio", label: "Início" },
@@ -68,9 +67,8 @@ export default function Header() {
 
         <div className="hidden md:block">
           <a
-            href={MERCADO_LIVRE.loja}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#produtos"
+            onClick={(e) => handleNavClick(e, "#produtos")}
             className="inline-flex items-center gap-2 rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-espresso transition-colors hover:bg-gold-light"
           >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
@@ -122,9 +120,8 @@ export default function Header() {
               </a>
             ))}
             <a
-              href={MERCADO_LIVRE.loja}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#produtos"
+              onClick={(e) => handleNavClick(e, "#produtos")}
               className="mt-2 rounded-full bg-gold px-5 py-3 text-center text-sm font-semibold text-espresso"
             >
               Comprar

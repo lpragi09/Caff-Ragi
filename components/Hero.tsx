@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { MERCADO_LIVRE } from "@/lib/constants";
 
 const FEATURES = [
   {
@@ -74,9 +73,7 @@ export default function Hero() {
               <span aria-hidden>&rarr;</span>
             </a>
             <a
-              href={MERCADO_LIVRE.loja}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#produtos"
               className="rounded-full border border-cream/25 px-7 py-3.5 text-sm font-semibold text-cream transition-colors hover:border-cream hover:bg-cream/10"
             >
               Comprar

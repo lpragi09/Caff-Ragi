@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { MERCADO_LIVRE } from "@/lib/constants";
 
 export default function CtaBanner() {
   return (
@@ -34,9 +33,7 @@ export default function CtaBanner() {
               Ver cafés
             </a>
             <a
-              href={MERCADO_LIVRE.loja}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#produtos"
               className="rounded-full bg-gold px-6 py-3 text-sm font-semibold text-espresso transition-colors hover:bg-gold-light"
             >
               Comprar

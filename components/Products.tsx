@@ -5,9 +5,9 @@ const PRODUCTS = [
   {
     id: "85",
     points: "85 Pontos",
-    tier: "Linha Especial",
+    tier: "Café Especial",
     name: "Caffè Ragi 85 Pontos",
-    image: "/images/bag-85-packshot.webp",
+    image: "/images/cafe-especial.webp",
     description:
       "Chocolate, caramelo e frutas cítricas em um café encorpado e equilibrado.",
     tags: ["Acidez equilibrada", "Corpo encorpado", "Minas Gerais · 1100m"],
@@ -18,9 +18,9 @@ const PRODUCTS = [
   {
     id: "75",
     points: "75 Pontos",
-    tier: "Linha Tradicional",
+    tier: "Café Gourmet",
     name: "Caffè Ragi 75 Pontos",
-    image: "/images/bag-75-packshot.webp",
+    image: "/images/cafe-gourmet.webp",
     description:
       "Café tradicional, doçura suave e leve amargor para o dia a dia.",
     tags: ["Acidez leve", "Corpo médio", "Sul de Minas Gerais"],
