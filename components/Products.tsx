@@ -3,30 +3,60 @@ import { MERCADO_LIVRE } from "@/lib/constants";
 
 const PRODUCTS = [
   {
-    id: "85",
+    id: "especial-250",
     points: "85 Pontos",
     tier: "Café Especial",
-    name: "Caffè Ragi 85 Pontos",
-    image: "/images/cafe-especial.webp",
+    weight: "250g",
+    name: "Caffè Ragi 85 Pontos — 250g",
+    image: "/images/cafe-especial-250g.webp",
     description:
       "Chocolate, caramelo e frutas cítricas em um café encorpado e equilibrado.",
     tags: ["Acidez equilibrada", "Corpo encorpado", "Minas Gerais · 1100m"],
     intensity: 4,
     icon: "flame" as const,
-    link: MERCADO_LIVRE.pontos85,
+    link: MERCADO_LIVRE.especial250,
   },
   {
-    id: "75",
+    id: "especial-500",
+    points: "85 Pontos",
+    tier: "Café Especial",
+    weight: "500g",
+    name: "Caffè Ragi 85 Pontos — 500g",
+    image: "/images/cafe-especial-500g.webp",
+    description:
+      "Chocolate, caramelo e frutas cítricas em um café encorpado e equilibrado.",
+    tags: ["Acidez equilibrada", "Corpo encorpado", "Minas Gerais · 1100m"],
+    intensity: 4,
+    icon: "flame" as const,
+    link: MERCADO_LIVRE.especial500,
+  },
+  {
+    id: "gourmet-250",
     points: "75 Pontos",
     tier: "Café Gourmet",
-    name: "Caffè Ragi 75 Pontos",
-    image: "/images/cafe-gourmet.webp",
+    weight: "250g",
+    name: "Caffè Ragi 75 Pontos — 250g",
+    image: "/images/cafe-gourmet-250g.webp",
     description:
       "Café tradicional, doçura suave e leve amargor para o dia a dia.",
     tags: ["Acidez leve", "Corpo médio", "Sul de Minas Gerais"],
     intensity: 3,
     icon: "leaf" as const,
-    link: MERCADO_LIVRE.pontos75,
+    link: MERCADO_LIVRE.gourmet250,
+  },
+  {
+    id: "gourmet-500",
+    points: "75 Pontos",
+    tier: "Café Gourmet",
+    weight: "500g",
+    name: "Caffè Ragi 75 Pontos — 500g",
+    image: "/images/cafe-gourmet-500g.webp",
+    description:
+      "Café tradicional, doçura suave e leve amargor para o dia a dia.",
+    tags: ["Acidez leve", "Corpo médio", "Sul de Minas Gerais"],
+    intensity: 3,
+    icon: "leaf" as const,
+    link: MERCADO_LIVRE.gourmet500,
   },
 ];
 
@@ -125,7 +155,7 @@ export default function Products() {
 
               <div className="flex flex-1 flex-col p-7">
                 <p className="text-xs font-medium uppercase tracking-wide text-cream/45">
-                  {product.tier} &middot; {product.points}
+                  {product.tier} &middot; {product.points} &middot; {product.weight}
                 </p>
                 <h3 className="mt-2 font-serif text-2xl text-cream">
                   {product.name}
