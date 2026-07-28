@@ -6,26 +6,51 @@ import { useState } from "react";
 import { MERCADO_LIVRE } from "@/lib/constants";
 
 const NAV_LINKS = [
+  { href: "#inicio", label: "Início" },
   { href: "#produtos", label: "Produtos" },
   { href: "#sobre", label: "Sobre" },
   { href: "#contato", label: "Contato" },
 ];
 
+function smoothScrollTo(id: string) {
+  const el = document.querySelector(id);
+  if (!el) return;
+  el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 export default function Header() {
   const [open, setOpen] = useState(false);
 
+  function handleNavClick(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
+    e.preventDefault();
+    setOpen(false);
+    smoothScrollTo(href);
+    history.pushState(null, "", href);
+  }
+
   return (
-    <header className="sticky top-0 z-50 border-b border-espresso/10 bg-cream/95 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-cream/10 bg-ink/90 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3 lg:px-10">
-        <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-          <Image
-            src="/images/logo-transparent.png"
-            alt="Caffè Ragi"
-            width={160}
-            height={73}
-            className="h-11 w-auto"
-            priority
-          />
+        <Link
+          href="#inicio"
+          onClick={(e) => handleNavClick(e, "#inicio")}
+          className="flex items-center gap-3"
+        >
+          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-espresso-light">
+            <Image
+              src="/images/logo-icon.png"
+              alt=""
+              width={40}
+              height={40}
+              className="h-8 w-8 object-contain"
+            />
+          </span>
+          <span className="flex flex-col leading-tight">
+            <span className="font-serif text-lg text-cream">Caffè Ragi</span>
+            <span className="text-[11px] uppercase tracking-[0.15em] text-cream/50">
+              café especial
+            </span>
+          </span>
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
@@ -33,7 +58,8 @@ export default function Header() {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm font-medium tracking-wide text-espresso/80 transition-colors hover:text-espresso"
+              onClick={(e) => handleNavClick(e, link.href)}
+              className="text-sm font-medium tracking-wide text-cream/70 transition-colors hover:text-cream"
             >
               {link.label}
             </a>
@@ -45,16 +71,27 @@ export default function Header() {
             href={MERCADO_LIVRE.loja}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full bg-espresso px-5 py-2.5 text-sm font-semibold text-cream transition-colors hover:bg-espresso-light"
+            className="inline-flex items-center gap-2 rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-espresso transition-colors hover:bg-gold-light"
           >
-            Comprar no Mercado Livre
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M4 3h2l2.4 12.4a2 2 0 0 0 2 1.6h7.2a2 2 0 0 0 2-1.6L21 8H6"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <circle cx="9.5" cy="20.5" r="1.3" fill="currentColor" />
+              <circle cx="17.5" cy="20.5" r="1.3" fill="currentColor" />
+            </svg>
+            Comprar
           </a>
         </div>
 
         <button
           type="button"
           aria-label="Abrir menu"
-          className="flex h-10 w-10 items-center justify-center rounded-full text-espresso md:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-full text-cream md:hidden"
           onClick={() => setOpen((v) => !v)}
         >
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -72,14 +109,14 @@ export default function Header() {
       </div>
 
       {open && (
-        <div className="border-t border-espresso/10 bg-cream px-6 py-4 md:hidden">
+        <div className="border-t border-cream/10 bg-ink px-6 py-4 md:hidden">
           <nav className="flex flex-col gap-4">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                onClick={() => setOpen(false)}
-                className="text-base font-medium text-espresso/80"
+                onClick={(e) => handleNavClick(e, link.href)}
+                className="text-base font-medium text-cream/80"
               >
                 {link.label}
               </a>
@@ -88,9 +125,9 @@ export default function Header() {
               href={MERCADO_LIVRE.loja}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-2 rounded-full bg-espresso px-5 py-3 text-center text-sm font-semibold text-cream"
+              className="mt-2 rounded-full bg-gold px-5 py-3 text-center text-sm font-semibold text-espresso"
             >
-              Comprar no Mercado Livre
+              Comprar
             </a>
           </nav>
         </div>

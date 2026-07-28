@@ -8,6 +8,7 @@ export default function Lifestyle() {
         alt="Pessoa tomando Caffè Ragi durante o trabalho, com os pacotes 85 e 75 pontos ao lado"
         fill
         sizes="100vw"
+        quality={92}
         className="object-cover"
       />
       <div className="absolute inset-0 bg-gradient-to-r from-espresso via-espresso/85 to-espresso/20" />
@@ -28,7 +29,7 @@ export default function Lifestyle() {
 
           <div className="mt-10 grid grid-cols-2 gap-6 border-t border-cream/15 pt-8 sm:grid-cols-3">
             {[
-              { value: "250g", label: "por pacote" },
+              { value: "250g–500g", label: "por pacote" },
               { value: "75–85", label: "pontos de qualidade" },
               { value: "100%", label: "arábica" },
             ].map((stat) => (

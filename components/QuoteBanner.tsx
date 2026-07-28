@@ -8,6 +8,7 @@ export default function QuoteBanner() {
         alt="Pacotes Caffè Ragi 85 e 75 pontos ao lado de um espresso, vistos de cima"
         fill
         sizes="100vw"
+        quality={92}
         className="object-cover"
       />
       <div className="absolute inset-0 bg-espresso/55" />

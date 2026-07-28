@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description:
     "Café especial 100% arábica, torrado artesanalmente em Três Pontas - Minas Gerais. Conheça o Caffè Ragi 85 e 75 pontos e compre no Mercado Livre.",
   icons: {
-    icon: "/images/logo-transparent.png",
+    icon: "/favicon.png",
   },
   openGraph: {
     title: "Caffè Ragi | Café Especial Torrado em Três Pontas - MG",
@@ -35,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className={`${sans.variable} ${serif.variable}`}>
-      <body className="min-h-full flex flex-col font-sans antialiased bg-cream text-espresso">
+      <body className="min-h-full flex flex-col font-sans antialiased bg-ink text-cream">
         {children}
       </body>
     </html>

@@ -4,7 +4,7 @@ import TrustBar from "@/components/TrustBar";
 import Products from "@/components/Products";
 import QuoteBanner from "@/components/QuoteBanner";
 import Lifestyle from "@/components/Lifestyle";
-import Gallery from "@/components/Gallery";
+import Contact from "@/components/Contact";
 import CtaBanner from "@/components/CtaBanner";
 import Footer from "@/components/Footer";
 
@@ -18,7 +18,7 @@ export default function Home() {
         <Products />
         <QuoteBanner />
         <Lifestyle />
-        <Gallery />
+        <Contact />
         <CtaBanner />
       </main>
       <Footer />

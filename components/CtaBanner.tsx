@@ -3,41 +3,45 @@ import { MERCADO_LIVRE } from "@/lib/constants";
 
 export default function CtaBanner() {
   return (
-    <section id="contato" className="relative overflow-hidden bg-espresso py-28">
-      <Image
-        src="/images/beans-dark-bg.webp"
-        alt="Grãos de café Caffè Ragi em movimento sobre fundo escuro"
-        fill
-        sizes="100vw"
-        className="object-cover opacity-60"
-      />
-      <div className="absolute inset-0 bg-espresso/60" />
+    <section className="bg-ink px-6 pb-6 lg:px-10">
+      <div className="relative mx-auto min-h-[420px] max-w-6xl overflow-hidden rounded-[2rem] sm:min-h-[300px]">
+        <Image
+          src="/images/bag-75-mug-lifestyle.webp"
+          alt="Xícara e pacote Caffè Ragi 75 pontos"
+          fill
+          sizes="100vw"
+          quality={92}
+          className="object-cover object-[75%_center]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/80 to-ink/20 sm:bg-gradient-to-r sm:from-ink sm:via-ink/85 sm:to-ink/40" />
 
-      <div className="relative mx-auto max-w-3xl px-6 text-center lg:px-10">
-        <h2 className="font-serif text-3xl text-cream sm:text-4xl">
-          Experimente o Caffè Ragi
-        </h2>
-        <p className="mx-auto mt-5 max-w-xl text-cream/75">
-          Escolha entre a torra 85 pontos ou a tradicional 75 pontos e receba
-          em casa através do Mercado Livre.
-        </p>
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-          <a
-            href={MERCADO_LIVRE.pontos85}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-espresso transition-colors hover:bg-gold-light"
-          >
-            Comprar 85 Pontos
-          </a>
-          <a
-            href={MERCADO_LIVRE.pontos75}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full border border-cream/40 px-7 py-3.5 text-sm font-semibold text-cream transition-colors hover:border-cream hover:bg-cream/10"
-          >
-            Comprar 75 Pontos
-          </a>
+        <div className="relative flex h-full min-h-[420px] flex-col justify-end gap-6 px-8 py-12 sm:min-h-[300px] sm:flex-row sm:items-center sm:justify-between sm:px-12">
+          <div>
+            <h2 className="font-serif text-2xl text-cream sm:text-3xl">
+              Receba cafés incríveis no ponto certo.
+            </h2>
+            <p className="mt-2 max-w-md text-sm text-cream/70">
+              Compra simples pelo Mercado Livre, com torra artesanal e
+              origem rastreável em cada pacote.
+            </p>
+          </div>
+
+          <div className="flex flex-shrink-0 flex-wrap items-center gap-3">
+            <a
+              href="#produtos"
+              className="rounded-full border border-cream/25 px-6 py-3 text-sm font-semibold text-cream transition-colors hover:border-cream hover:bg-cream/10"
+            >
+              Ver cafés
+            </a>
+            <a
+              href={MERCADO_LIVRE.loja}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-gold px-6 py-3 text-sm font-semibold text-espresso transition-colors hover:bg-gold-light"
+            >
+              Comprar
+            </a>
+          </div>
         </div>
       </div>
     </section>
