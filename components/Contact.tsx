@@ -8,9 +8,12 @@ export default function Contact() {
   const [email, setEmail] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [message, setMessage] = useState("");
+  const [website, setWebsite] = useState("");
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    // honeypot: campo invisível para humanos, só bots preenchem
+    if (website) return;
     const subject = encodeURIComponent(`Contato via site — ${name || "Cliente"}`);
     const bodyLines = [
       `Nome: ${name}`,
@@ -52,6 +55,20 @@ export default function Contact() {
             </p>
 
             <div className="mt-6 grid gap-5 sm:grid-cols-2">
+              <label
+                className="absolute left-[-9999px] top-auto h-0 w-0 overflow-hidden"
+                aria-hidden="true"
+              >
+                Não preencha este campo
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                />
+              </label>
               <label className="flex flex-col gap-2 text-sm text-cream/70">
                 Nome
                 <input

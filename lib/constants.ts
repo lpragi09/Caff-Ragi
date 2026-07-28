@@ -9,7 +9,7 @@ export const MERCADO_LIVRE = {
 
 // TODO: substitua pelos dados reais de contato da Caffè Ragi.
 export const CONTACT = {
-  email: "contato@caffeeragi.com",
+  email: "cofferagi@gmail.com",
   whatsapp: "(35) 9 8887-7102",
   whatsappLink: "https://wa.me/553588877102",
 };
