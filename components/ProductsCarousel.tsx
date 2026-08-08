@@ -23,7 +23,14 @@ export default function ProductsCarousel({ products }: { products: Product[] }) 
     const track = trackRef.current;
     const slide = slideAt(index);
     if (!track || !slide) return;
-    track.scrollTo({ left: slide.offsetLeft, behavior: smooth ? "smooth" : "auto" });
+    if (smooth) {
+      track.scrollTo({ left: slide.offsetLeft, behavior: "smooth" });
+    } else {
+      // Direct assignment, bypassing scrollTo's behavior option: some browsers keep
+      // easing an in-flight smooth scroll into this "instant" call, turning the
+      // invisible loop-reset into a visible reverse slide across every card.
+      track.scrollLeft = slide.offsetLeft;
+    }
   }
 
   function closestIndex(track: HTMLDivElement) {
@@ -103,7 +110,8 @@ export default function ProductsCarousel({ products }: { products: Product[] }) 
     <div className="relative mt-8">
       <div
         ref={trackRef}
-        className="scrollbar-hide flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-2"
+        className="scrollbar-hide flex snap-x snap-mandatory gap-6 overflow-x-auto pb-2"
+        data-lenis-prevent
       >
         {slides.map((product, i) => (
           <div
