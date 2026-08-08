@@ -45,7 +45,7 @@ export function IntensityStars({ value }: { value: number }) {
 
 export default function ProductCard({ product }: { product: Product }) {
   return (
-    <div className="group flex flex-col overflow-hidden rounded-3xl border border-cream/10 bg-espresso/60 transition-colors hover:border-gold/30">
+    <div className="group flex h-full flex-col overflow-hidden rounded-3xl border border-cream/10 bg-espresso/60 transition-colors hover:border-gold/30">
       <div className="relative aspect-[4/5] w-full overflow-hidden bg-espresso">
         <Image
           src={getProductImage(product.category, product.weight)}
@@ -81,7 +81,7 @@ export default function ProductCard({ product }: { product: Product }) {
           </span>
         </div>
 
-        <div className="mt-7 flex items-center justify-between gap-4 border-t border-cream/10 pt-6">
+        <div className="mt-auto flex items-center justify-between gap-4 border-t border-cream/10 pt-6">
           <div>
             <IntensityStars value={product.intensity} />
             <p className="mt-1 text-[11px] uppercase tracking-wide text-cream/40">
