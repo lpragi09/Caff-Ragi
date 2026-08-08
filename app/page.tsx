@@ -8,6 +8,8 @@ import Contact from "@/components/Contact";
 import CtaBanner from "@/components/CtaBanner";
 import Footer from "@/components/Footer";
 
+export const revalidate = 3600;
+
 export default function Home() {
   return (
     <>

@@ -1,6 +1,6 @@
 import ProductsCarousel from "@/components/ProductsCarousel";
 import Reveal from "@/components/Reveal";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/public";
 import type { Product } from "@/lib/products";
 
 const FALLBACK_PRODUCTS: Product[] = [
@@ -62,7 +62,7 @@ const FALLBACK_PRODUCTS: Product[] = [
 
 async function getProducts(): Promise<Product[]> {
   try {
-    const supabase = await createClient();
+    const supabase = createClient();
     const { data, error } = await supabase
       .from("products")
       .select("*")
