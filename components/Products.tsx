@@ -1,4 +1,4 @@
-import ProductCard from "@/components/ProductCard";
+import ProductsCarousel from "@/components/ProductsCarousel";
 import { createClient } from "@/lib/supabase/server";
 import type { Product } from "@/lib/products";
 
@@ -107,11 +107,7 @@ export default async function Products() {
           Cafés especiais, com origem e perfil sensorial claro.
         </div>
 
-        <div className="mt-8 grid gap-6 md:grid-cols-2">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        <ProductsCarousel products={products} />
       </div>
     </section>
   );
