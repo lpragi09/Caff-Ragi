@@ -85,8 +85,8 @@ export default function Hero() {
 
           <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-3">
             {FEATURES.map((f, i) => (
-              <Reveal key={f.title} delay={i * 100}>
-                <div className="rounded-2xl border border-cream/10 bg-cream/[0.03] p-5">
+              <Reveal key={f.title} delay={i * 100} className="h-full">
+                <div className="h-full rounded-2xl border border-cream/10 bg-cream/[0.03] p-5">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="text-gold-light">
                     {f.icon}
                   </svg>
