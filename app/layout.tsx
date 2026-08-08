@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Manrope, Playfair_Display } from "next/font/google";
-import SmoothScroll from "@/components/SmoothScroll";
-import "lenis/dist/lenis.css";
 import "./globals.css";
 
 const sans = Manrope({
@@ -38,7 +36,6 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${sans.variable} ${serif.variable}`}>
       <body className="min-h-full flex flex-col font-sans antialiased bg-ink text-cream">
-        <SmoothScroll />
         {children}
       </body>
     </html>

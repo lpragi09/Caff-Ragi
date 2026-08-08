@@ -1,121 +1,57 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import type { Product } from "@/lib/products";
 
 export default function ProductsCarousel({ products }: { products: Product[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
-  const isJumping = useRef(false);
-  const settleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const count = products.length;
-  const loop = count > 1;
-  const slides = loop ? [products[count - 1], ...products, products[0]] : products;
-
-  function slideAt(index: number) {
+  function scrollToIndex(index: number) {
     const track = trackRef.current;
-    return track?.children[index] as HTMLElement | undefined;
+    if (!track) return;
+    const slide = track.children[index] as HTMLElement | undefined;
+    if (!slide) return;
+    track.scrollTo({ left: slide.offsetLeft, behavior: "smooth" });
   }
 
-  function scrollToSlide(index: number, smooth = true) {
-    const track = trackRef.current;
-    const slide = slideAt(index);
-    if (!track || !slide) return;
-    if (smooth) {
-      track.scrollTo({ left: slide.offsetLeft, behavior: "smooth" });
-    } else {
-      // Direct assignment, bypassing scrollTo's behavior option: some browsers keep
-      // easing an in-flight smooth scroll into this "instant" call, turning the
-      // invisible loop-reset into a visible reverse slide across every card.
-      track.scrollLeft = slide.offsetLeft;
-    }
+  function scrollBy(direction: 1 | -1) {
+    scrollToIndex(Math.min(Math.max(active + direction, 0), products.length - 1));
   }
-
-  function closestIndex(track: HTMLDivElement) {
-    const children = Array.from(track.children) as HTMLElement[];
-    let closest = 0;
-    let minDistance = Infinity;
-    children.forEach((child, i) => {
-      const distance = Math.abs(child.offsetLeft - track.scrollLeft);
-      if (distance < minDistance) {
-        minDistance = distance;
-        closest = i;
-      }
-    });
-    return closest;
-  }
-
-  // Start on the first real slide (index 1 in the cloned array), no animation.
-  useLayoutEffect(() => {
-    if (!loop) return;
-    isJumping.current = true;
-    scrollToSlide(1, false);
-    requestAnimationFrame(() => {
-      isJumping.current = false;
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [count]);
 
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
 
-    function handleScroll() {
-      if (!track || isJumping.current) return;
-      if (settleTimer.current) clearTimeout(settleTimer.current);
-      settleTimer.current = setTimeout(() => {
-        const idx = closestIndex(track);
-
-        if (loop && idx === 0) {
-          isJumping.current = true;
-          scrollToSlide(count, false);
-          requestAnimationFrame(() => {
-            isJumping.current = false;
-          });
-          setActive(count - 1);
-        } else if (loop && idx === slides.length - 1) {
-          isJumping.current = true;
-          scrollToSlide(1, false);
-          requestAnimationFrame(() => {
-            isJumping.current = false;
-          });
-          setActive(0);
-        } else {
-          setActive(loop ? idx - 1 : idx);
+    function onScroll() {
+      if (!track) return;
+      const slides = Array.from(track.children) as HTMLElement[];
+      let closest = 0;
+      let minDistance = Infinity;
+      slides.forEach((slide, i) => {
+        const distance = Math.abs(slide.offsetLeft - track.scrollLeft);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closest = i;
         }
-      }, 120);
+      });
+      setActive(closest);
     }
 
-    track.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      track.removeEventListener("scroll", handleScroll);
-      if (settleTimer.current) clearTimeout(settleTimer.current);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [count, loop]);
-
-  function goToDot(index: number) {
-    scrollToSlide(loop ? index + 1 : index);
-  }
-
-  function step(direction: 1 | -1) {
-    const track = trackRef.current;
-    if (!track) return;
-    scrollToSlide(closestIndex(track) + direction);
-  }
+    track.addEventListener("scroll", onScroll, { passive: true });
+    return () => track.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <div className="relative mt-8">
       <div
         ref={trackRef}
-        className="scrollbar-hide flex snap-x snap-mandatory gap-6 overflow-x-auto pb-2"
-        data-lenis-prevent
+        className="scrollbar-hide flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-2"
       >
-        {slides.map((product, i) => (
+        {products.map((product) => (
           <div
-            key={`${product.id}-${i}`}
+            key={product.id}
             className="w-[82%] flex-none snap-start sm:w-[60%] md:w-[45%] lg:w-[31%]"
           >
             <ProductCard product={product} />
@@ -130,7 +66,7 @@ export default function ProductsCarousel({ products }: { products: Product[] }) 
               key={product.id}
               type="button"
               aria-label={`Ir para ${product.title}`}
-              onClick={() => goToDot(i)}
+              onClick={() => scrollToIndex(i)}
               className={`h-1.5 rounded-full transition-all ${
                 i === active ? "w-6 bg-gold" : "w-1.5 bg-cream/20 hover:bg-cream/35"
               }`}
@@ -142,8 +78,9 @@ export default function ProductsCarousel({ products }: { products: Product[] }) 
           <button
             type="button"
             aria-label="Produto anterior"
-            onClick={() => step(-1)}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-cream/15 text-cream transition-colors hover:border-gold/40 hover:text-gold-light"
+            disabled={active === 0}
+            onClick={() => scrollBy(-1)}
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-cream/15 text-cream transition-colors hover:border-gold/40 hover:text-gold-light disabled:opacity-30 disabled:hover:border-cream/15 disabled:hover:text-cream"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <path d="M15 5 8 12l7 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -152,8 +89,9 @@ export default function ProductsCarousel({ products }: { products: Product[] }) 
           <button
             type="button"
             aria-label="Próximo produto"
-            onClick={() => step(1)}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-cream/15 text-cream transition-colors hover:border-gold/40 hover:text-gold-light"
+            disabled={active === products.length - 1}
+            onClick={() => scrollBy(1)}
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-cream/15 text-cream transition-colors hover:border-gold/40 hover:text-gold-light disabled:opacity-30 disabled:hover:border-cream/15 disabled:hover:text-cream"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />

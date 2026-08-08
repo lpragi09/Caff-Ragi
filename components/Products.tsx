@@ -1,4 +1,5 @@
 import ProductsCarousel from "@/components/ProductsCarousel";
+import Reveal from "@/components/Reveal";
 import { createClient } from "@/lib/supabase/server";
 import type { Product } from "@/lib/products";
 
@@ -82,32 +83,36 @@ export default async function Products() {
   return (
     <section id="produtos" className="bg-ink py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        <span className="inline-flex items-center gap-2 rounded-full border border-cream/15 bg-cream/5 px-4 py-1.5 text-xs font-medium text-cream/70">
-          <span className="h-1.5 w-1.5 rounded-full bg-gold" />
-          Nossos Cafés
-        </span>
-        <h2 className="mt-5 max-w-lg font-serif text-3xl text-cream sm:text-4xl">
-          Catálogo elegante, com perfis que fazem sentido.
-        </h2>
-        <p className="mt-4 max-w-xl text-cream/65">
-          Escolha pela torra e pelo perfil de sabor que combina com você.
-          Duas opções, notas bem definidas, sempre com origem rastreável.
-        </p>
+        <Reveal>
+          <span className="inline-flex items-center gap-2 rounded-full border border-cream/15 bg-cream/5 px-4 py-1.5 text-xs font-medium text-cream/70">
+            <span className="h-1.5 w-1.5 rounded-full bg-gold" />
+            Nossos Cafés
+          </span>
+          <h2 className="mt-5 max-w-lg font-serif text-3xl text-cream sm:text-4xl">
+            Catálogo elegante, com perfis que fazem sentido.
+          </h2>
+          <p className="mt-4 max-w-xl text-cream/65">
+            Escolha pela torra e pelo perfil de sabor que combina com você.
+            Duas opções, notas bem definidas, sempre com origem rastreável.
+          </p>
 
-        <div className="mt-10 flex items-center gap-2 text-sm text-cream/55">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-gold-light">
-            <path
-              d="M4 9h16l-1.4 9.2A2 2 0 0 1 16.63 20H7.37a2 2 0 0 1-1.97-1.8L4 9Zm3-4 1-2m4 2 0-2m4 2 1-2"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          Cafés especiais, com origem e perfil sensorial claro.
-        </div>
+          <div className="mt-10 flex items-center gap-2 text-sm text-cream/55">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-gold-light">
+              <path
+                d="M4 9h16l-1.4 9.2A2 2 0 0 1 16.63 20H7.37a2 2 0 0 1-1.97-1.8L4 9Zm3-4 1-2m4 2 0-2m4 2 1-2"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            Cafés especiais, com origem e perfil sensorial claro.
+          </div>
+        </Reveal>
 
-        <ProductsCarousel products={products} />
+        <Reveal delay={150}>
+          <ProductsCarousel products={products} />
+        </Reveal>
       </div>
     </section>
   );

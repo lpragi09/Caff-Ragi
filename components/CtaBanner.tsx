@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Reveal from "@/components/Reveal";
 
 export default function CtaBanner() {
   return (
@@ -14,7 +15,7 @@ export default function CtaBanner() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/80 to-ink/20 sm:bg-gradient-to-r sm:from-ink sm:via-ink/85 sm:to-ink/40" />
 
-        <div className="relative mx-auto flex h-full min-h-[420px] max-w-7xl flex-col justify-end gap-6 px-6 py-12 sm:min-h-[300px] sm:flex-row sm:items-center sm:justify-between sm:px-10">
+        <Reveal className="relative mx-auto flex h-full min-h-[420px] max-w-7xl flex-col justify-end gap-6 px-6 py-12 sm:min-h-[300px] sm:flex-row sm:items-center sm:justify-between sm:px-10">
           <div>
             <h2 className="font-serif text-2xl text-cream sm:text-3xl">
               Receba cafés incríveis no ponto certo.
@@ -39,7 +40,7 @@ export default function CtaBanner() {
               Comprar
             </a>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

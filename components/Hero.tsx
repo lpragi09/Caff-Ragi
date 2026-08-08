@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Reveal from "@/components/Reveal";
 
 const FEATURES = [
   {
@@ -48,55 +49,56 @@ export default function Hero() {
 
       <div className="relative mx-auto grid max-w-7xl gap-16 px-6 lg:grid-cols-2 lg:items-center lg:px-10">
         <div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-cream/15 bg-cream/5 px-4 py-1.5 text-xs font-medium text-cream/70">
-            <span className="h-1.5 w-1.5 rounded-full bg-gold" />
-            Torra artesanal. Direto de Três Pontas &ndash; MG.
-          </span>
+          <Reveal>
+            <span className="inline-flex items-center gap-2 rounded-full border border-cream/15 bg-cream/5 px-4 py-1.5 text-xs font-medium text-cream/70">
+              <span className="h-1.5 w-1.5 rounded-full bg-gold" />
+              Torra artesanal. Direto de Três Pontas &ndash; MG.
+            </span>
 
-          <h1 className="mt-6 font-serif text-4xl leading-tight text-cream sm:text-5xl lg:text-[3.4rem]">
-            O café especial que transforma sua rotina em{" "}
-            <span className="text-gold-light">ritual</span>.
-          </h1>
+            <h1 className="mt-6 font-serif text-4xl leading-tight text-cream sm:text-5xl lg:text-[3.4rem]">
+              O café especial que transforma sua rotina em{" "}
+              <span className="text-gold-light">ritual</span>.
+            </h1>
 
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-cream/70">
-            Duas torras, notas de sabor bem definidas e a tradição italiana no
-            nome. Do grão à xícara, pensado para quem exige qualidade em cada
-            detalhe.
-          </p>
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-cream/70">
+              Duas torras, notas de sabor bem definidas e a tradição italiana no
+              nome. Do grão à xícara, pensado para quem exige qualidade em cada
+              detalhe.
+            </p>
 
-          <div className="mt-9 flex flex-wrap items-center gap-4">
-            <a
-              href="#produtos"
-              className="inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-espresso transition-colors hover:bg-gold-light"
-            >
-              Ver cafés
-              <span aria-hidden>&rarr;</span>
-            </a>
-            <a
-              href="#produtos"
-              className="rounded-full border border-cream/25 px-7 py-3.5 text-sm font-semibold text-cream transition-colors hover:border-cream hover:bg-cream/10"
-            >
-              Comprar
-            </a>
-          </div>
+            <div className="mt-9 flex flex-wrap items-center gap-4">
+              <a
+                href="#produtos"
+                className="inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-espresso transition-colors hover:bg-gold-light"
+              >
+                Ver cafés
+                <span aria-hidden>&rarr;</span>
+              </a>
+              <a
+                href="#produtos"
+                className="rounded-full border border-cream/25 px-7 py-3.5 text-sm font-semibold text-cream transition-colors hover:border-cream hover:bg-cream/10"
+              >
+                Comprar
+              </a>
+            </div>
+          </Reveal>
 
           <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-3">
-            {FEATURES.map((f) => (
-              <div
-                key={f.title}
-                className="rounded-2xl border border-cream/10 bg-cream/[0.03] p-5"
-              >
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="text-gold-light">
-                  {f.icon}
-                </svg>
-                <p className="mt-3 text-sm font-semibold text-cream">{f.title}</p>
-                <p className="mt-1 text-xs leading-relaxed text-cream/55">{f.desc}</p>
-              </div>
+            {FEATURES.map((f, i) => (
+              <Reveal key={f.title} delay={i * 100}>
+                <div className="rounded-2xl border border-cream/10 bg-cream/[0.03] p-5">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="text-gold-light">
+                    {f.icon}
+                  </svg>
+                  <p className="mt-3 text-sm font-semibold text-cream">{f.title}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-cream/55">{f.desc}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
 
-        <div className="relative">
+        <Reveal className="relative" delay={150}>
           <div className="relative overflow-hidden rounded-[2rem] shadow-2xl shadow-black/40">
             <div className="relative aspect-[4/5] w-full">
               <Image
@@ -130,7 +132,7 @@ export default function Hero() {
               </p>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

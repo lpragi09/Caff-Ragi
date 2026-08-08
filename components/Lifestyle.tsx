@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Reveal from "@/components/Reveal";
 
 export default function Lifestyle() {
   return (
@@ -14,7 +15,7 @@ export default function Lifestyle() {
       <div className="absolute inset-0 bg-gradient-to-r from-espresso via-espresso/85 to-espresso/20" />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
-        <div className="max-w-lg">
+        <Reveal className="max-w-lg">
           <p className="text-xs font-semibold uppercase tracking-[0.35em] text-gold-light">
             Qualidade em cada torra
           </p>
@@ -32,18 +33,18 @@ export default function Lifestyle() {
               { value: "250g–500g", label: "por pacote" },
               { value: "75–85", label: "pontos de qualidade" },
               { value: "100%", label: "arábica" },
-            ].map((stat) => (
-              <div key={stat.label}>
+            ].map((stat, i) => (
+              <Reveal key={stat.label} delay={i * 100}>
                 <p className="font-serif text-2xl text-gold-light">
                   {stat.value}
                 </p>
                 <p className="text-xs uppercase tracking-wide text-cream/60">
                   {stat.label}
                 </p>
-              </div>
+              </Reveal>
             ))}
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

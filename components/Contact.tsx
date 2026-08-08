@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { CONTACT } from "@/lib/constants";
+import Reveal from "@/components/Reveal";
 
 type Status = "idle" | "sending" | "success" | "error";
 
@@ -50,19 +51,22 @@ export default function Contact() {
   return (
     <section id="contato" className="bg-ink py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        <span className="inline-flex items-center gap-2 rounded-full border border-cream/15 bg-cream/5 px-4 py-1.5 text-xs font-medium text-cream/70">
-          <span className="h-1.5 w-1.5 rounded-full bg-gold" />
-          Contato
-        </span>
-        <h2 className="mt-5 max-w-xl font-serif text-3xl text-cream sm:text-4xl">
-          Quer comprar? A gente ajuda você a escolher.
-        </h2>
-        <p className="mt-4 max-w-xl text-cream/65">
-          Deixe seu contato e conte como você prepara o seu café.
-          Recomendamos a torra ideal e tiramos suas dúvidas.
-        </p>
+        <Reveal>
+          <span className="inline-flex items-center gap-2 rounded-full border border-cream/15 bg-cream/5 px-4 py-1.5 text-xs font-medium text-cream/70">
+            <span className="h-1.5 w-1.5 rounded-full bg-gold" />
+            Contato
+          </span>
+          <h2 className="mt-5 max-w-xl font-serif text-3xl text-cream sm:text-4xl">
+            Quer comprar? A gente ajuda você a escolher.
+          </h2>
+          <p className="mt-4 max-w-xl text-cream/65">
+            Deixe seu contato e conte como você prepara o seu café.
+            Recomendamos a torra ideal e tiramos suas dúvidas.
+          </p>
+        </Reveal>
 
         <div className="mt-12 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+          <Reveal>
           <form
             onSubmit={handleSubmit}
             className="rounded-3xl border border-cream/10 bg-cream/[0.03] p-8"
@@ -161,8 +165,9 @@ export default function Contact() {
               </p>
             )}
           </form>
+          </Reveal>
 
-          <div className="flex flex-col gap-4">
+          <Reveal delay={120} className="flex flex-col gap-4">
             <a
               href={`mailto:${CONTACT.email}`}
               className="rounded-2xl border border-cream/10 bg-cream/[0.03] p-5 transition-colors hover:border-gold/30"
@@ -211,7 +216,7 @@ export default function Contact() {
                 certo para o seu paladar.
               </p>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>
