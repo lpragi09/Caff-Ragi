@@ -59,7 +59,7 @@ export default function ProductCard({ product }: { product: Product }) {
           {product.description}
         </p>
 
-        <div className="mt-5 flex flex-wrap gap-2">
+        <div className="mt-5 mb-7 flex flex-wrap gap-2">
           <span className="rounded-full border border-cream/15 px-3 py-1 text-xs text-cream/65">
             Acidez {product.acidez}
           </span>
@@ -68,7 +68,7 @@ export default function ProductCard({ product }: { product: Product }) {
           </span>
         </div>
 
-        <div className="mt-auto flex items-center justify-between gap-4 border-t border-cream/10 pt-6">
+        <div className="mt-auto flex items-center justify-between gap-4">
           <div>
             <IntensityStars value={product.intensity} />
             <p className="mt-1 text-[11px] uppercase tracking-wide text-cream/40">
