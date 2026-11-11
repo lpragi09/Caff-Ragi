@@ -86,3 +86,50 @@ body {
 .italian-rule span:nth-child(3) {
   background: #b5312c;
 }
+
+/* faixa da Itália sempre visível na base da tela */
+.italian-rule--fixed {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  pointer-events: none;
+}
+
+/* barra de rolagem nas cores da bandeira (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ink);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to bottom,
+    #1c8a4b 0 33.33%,
+    #ffffff 33.33% 66.66%,
+    #b5312c 66.66% 100%
+  );
+  border-radius: 999px;
+  border: 2px solid var(--color-ink);
+}
+::-webkit-scrollbar-thumb:horizontal {
+  background: linear-gradient(
+    to right,
+    #1c8a4b 0 33.33%,
+    #ffffff 33.33% 66.66%,
+    #b5312c 66.66% 100%
+  );
+}
+::-webkit-scrollbar-corner {
+  background: var(--color-ink);
+}
+
+/* Firefox não aceita degradê na barra: usa o verde da bandeira */
+@supports (-moz-appearance: none) {
+  html {
+    scrollbar-color: #1c8a4b var(--color-ink);
+  }
+}

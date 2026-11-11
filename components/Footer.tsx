@@ -96,7 +96,7 @@ export default function Footer() {
           <p>&copy; {new Date().getFullYear()} Caffè Ragi. Todos os direitos reservados.</p>
         </div>
       </div>
-      <div className="italian-rule">
+      <div className="italian-rule italian-rule--fixed" aria-hidden>
         <span />
         <span />
         <span />
