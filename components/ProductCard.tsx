@@ -75,7 +75,7 @@ export default function ProductCard({ product }: { product: Product }) {
             {...(hasLink ? { target: "_blank", rel: "noopener noreferrer" } : {})}
             className="inline-flex items-center justify-center rounded-full bg-gold px-6 py-3 text-sm font-semibold text-espresso transition-colors hover:bg-gold-light"
           >
-            {hasLink ? "Comprar" : "Encomendar"}
+            Comprar
           </a>
         </div>
       </div>

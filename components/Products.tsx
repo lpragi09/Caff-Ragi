@@ -59,72 +59,9 @@ async function getProducts(): Promise<Product[]> {
   }
 }
 
-function FichaDoLote() {
-  const dataAnalise = new Date(`${LOTE.dataAnalise}T12:00:00`).toLocaleDateString("pt-BR", {
-    month: "long",
-    year: "numeric",
-  });
-
-  return (
-    <div className="flex h-full flex-col rounded-3xl border border-gold/25 bg-gradient-to-b from-espresso to-ink p-7">
-      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gold-light">
-        Ficha do lote
-      </p>
-
-      <div className="mt-5 flex items-end gap-3">
-        <span className="font-serif text-6xl leading-none text-cream">
-          {formatPoints(LOTE.pontuacao)}
-        </span>
-        <span className="pb-1 text-sm text-cream/60">
-          pontos
-          <br />
-          escala SCA
-        </span>
-      </div>
-
-      <div className="mt-6">
-        <p className="text-[11px] uppercase tracking-wide text-cream/45">Notas sensoriais</p>
-        <div className="mt-2 flex flex-wrap gap-2">
-          {LOTE.notas.map((nota) => (
-            <span
-              key={nota}
-              className="rounded-full bg-gold/15 px-3 py-1 text-sm font-medium text-gold-light"
-            >
-              {nota}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      <dl className="mt-6 flex flex-col gap-2.5">
-        {LOTE.atributos.map((attr) => (
-          <div key={attr.label} className="grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-1">
-            <dt className="text-xs text-cream/65">{attr.label}</dt>
-            <dd className="text-xs font-semibold tabular-nums text-cream">
-              {attr.value.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
-            </dd>
-            <div className="col-span-2 h-1 overflow-hidden rounded-full bg-cream/10" aria-hidden>
-              <div
-                className="h-full rounded-full bg-gold"
-                style={{ width: `${(attr.value / 10) * 100}%` }}
-              />
-            </div>
-          </div>
-        ))}
-      </dl>
-
-      <div className="mt-auto flex flex-col gap-1 border-t border-cream/10 pt-5 text-xs text-cream/50">
-        <span>Lote {LOTE.codigo}</span>
-        <span>{LOTE.peneira}</span>
-        <span>Análise sensorial de {dataAnalise}</span>
-      </div>
-    </div>
-  );
-}
-
 export default async function Products() {
   const products = await getProducts();
-  const useCarousel = products.length > 2;
+  const useCarousel = products.length > 3;
 
   return (
     <section id="produtos" className="bg-ink py-24">
@@ -144,23 +81,17 @@ export default async function Products() {
           </p>
         </Reveal>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
-          <Reveal className="h-full">
-            <FichaDoLote />
-          </Reveal>
-
-          <Reveal delay={150} className="min-w-0">
-            {useCarousel ? (
-              <ProductsCarousel products={products} />
-            ) : (
-              <div className="grid h-full gap-6 sm:grid-cols-2">
-                {products.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
-            )}
-          </Reveal>
-        </div>
+        <Reveal delay={150} className="mt-12">
+          {useCarousel ? (
+            <ProductsCarousel products={products} />
+          ) : (
+            <div className="grid gap-6 sm:grid-cols-2 lg:max-w-4xl">
+              {products.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          )}
+        </Reveal>
       </div>
     </section>
   );
