@@ -2,17 +2,16 @@
 
 import { useState } from "react";
 import ProductCard from "@/components/ProductCard";
-import type { Category, Product, Weight } from "@/lib/products";
+import { WEIGHTS_FOR_SALE, type Category, type Product, type Weight } from "@/lib/products";
 
 const CATEGORY_OPTIONS: { value: Category; label: string }[] = [
   { value: "especial", label: "Café Especial" },
   { value: "gourmet", label: "Café Gourmet" },
 ];
 
-const WEIGHT_OPTIONS: { value: Weight; label: string }[] = [
-  { value: "250g", label: "250g" },
-  { value: "500g", label: "500g" },
-];
+const WEIGHT_OPTIONS: { value: Weight; label: string }[] = WEIGHTS_FOR_SALE.map(
+  (w) => ({ value: w, label: w })
+);
 
 export default function ProductForm({
   action,
@@ -24,9 +23,9 @@ export default function ProductForm({
   submitLabel: string;
 }) {
   const [title, setTitle] = useState(initial?.title ?? "");
-  const [points, setPoints] = useState(initial?.points ?? 80);
+  const [points, setPoints] = useState(initial?.points ?? 83.5);
   const [category, setCategory] = useState<Category>(initial?.category ?? "especial");
-  const [weight, setWeight] = useState<Weight>(initial?.weight ?? "250g");
+  const [weight, setWeight] = useState<Weight>(initial?.weight ?? "500g");
   const [intensity, setIntensity] = useState(initial?.intensity ?? 3);
   const [acidez, setAcidez] = useState(initial?.acidez ?? "");
   const [corpo, setCorpo] = useState(initial?.corpo ?? "");
@@ -60,7 +59,7 @@ export default function ProductForm({
             name="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Caffè Ragi 85 Pontos — 250g"
+            placeholder="Caffè Ragi Especial — 500g"
             className="rounded-xl border border-cream/15 bg-espresso/40 px-4 py-2.5 text-cream outline-none focus:border-gold"
           />
         </label>
@@ -74,6 +73,7 @@ export default function ProductForm({
               name="points"
               min={0}
               max={100}
+              step={0.25}
               value={points}
               onChange={(e) => setPoints(Number(e.target.value))}
               className="rounded-xl border border-cream/15 bg-espresso/40 px-4 py-2.5 text-cream outline-none focus:border-gold"
@@ -149,7 +149,7 @@ export default function ProductForm({
             ))}
           </div>
           <p className="text-xs text-cream/40">
-            A imagem do anúncio é escolhida automaticamente pela categoria + peso.
+            A imagem do anúncio é escolhida automaticamente pelo peso.
           </p>
         </div>
 

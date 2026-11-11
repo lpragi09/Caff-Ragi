@@ -5,8 +5,8 @@ export default function QuoteBanner() {
   return (
     <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden bg-espresso">
       <Image
-        src="/images/flatlay-both-bags-cup.webp"
-        alt="Pacotes Caffè Ragi 85 e 75 pontos ao lado de um espresso, vistos de cima"
+        src="/images/espresso-cup-top.webp"
+        alt="Xícara de espresso vista de cima"
         fill
         sizes="100vw"
         quality={92}

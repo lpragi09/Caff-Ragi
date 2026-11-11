@@ -5,14 +5,14 @@ export default function Lifestyle() {
   return (
     <section id="sobre" className="relative overflow-hidden bg-espresso py-28">
       <Image
-        src="/images/lifestyle-man-desk.webp"
-        alt="Pessoa tomando Caffè Ragi durante o trabalho, com os pacotes 85 e 75 pontos ao lado"
+        src="/images/cafe-ragi-1kg.webp"
+        alt="Pacote de 1kg do Caffè Ragi sobre mesa de madeira, com moedor, xícara e grãos"
         fill
         sizes="100vw"
         quality={92}
-        className="object-cover"
+        className="object-cover object-[70%_45%]"
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-espresso via-espresso/85 to-espresso/20" />
+      <div className="absolute inset-0 bg-espresso/85 sm:bg-transparent sm:bg-gradient-to-r sm:from-espresso sm:via-espresso/85 sm:to-espresso/20" />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
         <Reveal className="max-w-lg">
@@ -30,8 +30,8 @@ export default function Lifestyle() {
 
           <div className="mt-10 grid grid-cols-2 gap-6 border-t border-cream/15 pt-8 sm:grid-cols-3">
             {[
-              { value: "250g–500g", label: "por pacote" },
-              { value: "75–85", label: "pontos de qualidade" },
+              { value: "500g–1kg", label: "por pacote" },
+              { value: "83+", label: "pontos de qualidade" },
               { value: "100%", label: "arábica" },
             ].map((stat, i) => (
               <Reveal key={stat.label} delay={i * 100}>

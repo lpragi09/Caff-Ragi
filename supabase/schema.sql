@@ -3,9 +3,9 @@
 create table if not exists public.products (
   id uuid primary key default gen_random_uuid(),
   title text not null,
-  points smallint not null check (points between 0 and 100),
+  points numeric(4,2) not null check (points between 0 and 100),
   category text not null check (category in ('especial', 'gourmet')),
-  weight text not null check (weight in ('250g', '500g')),
+  weight text not null check (weight in ('250g', '500g', '1kg')),
   intensity smallint not null check (intensity between 1 and 5),
   acidez text not null,
   corpo text not null,
@@ -40,37 +40,60 @@ create policy "public read active products"
   to anon, authenticated
   using (active = true);
 
--- o operador logado (painel de admin) enxerga tudo, inclusive inativos
+-- escrita e leitura de inativos: só admins (tabela public.admins + is_admin())
+-- ver supabase/migrations/20261111_admin_only.sql
+create table if not exists public.admins (
+  user_id uuid primary key references auth.users (id) on delete cascade,
+  created_at timestamptz not null default now()
+);
+alter table public.admins enable row level security;
+revoke all on public.admins from anon, authenticated;
+
+create or replace function public.is_admin()
+returns boolean
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select exists (
+    select 1 from public.admins where user_id = (select auth.uid())
+  );
+$$;
+revoke all on function public.is_admin() from public, anon;
+grant execute on function public.is_admin() to authenticated;
+
 drop policy if exists "admin read all products" on public.products;
 create policy "admin read all products"
   on public.products for select
   to authenticated
-  using (true);
+  using ((select public.is_admin()));
 
 drop policy if exists "admin insert products" on public.products;
 create policy "admin insert products"
   on public.products for insert
   to authenticated
-  with check (true);
+  with check ((select public.is_admin()));
 
 drop policy if exists "admin update products" on public.products;
 create policy "admin update products"
   on public.products for update
   to authenticated
-  using (true)
-  with check (true);
+  using ((select public.is_admin()))
+  with check ((select public.is_admin()));
 
 drop policy if exists "admin delete products" on public.products;
 create policy "admin delete products"
   on public.products for delete
   to authenticated
-  using (true);
+  using ((select public.is_admin()));
 
--- popula com os 4 anúncios que já estão no site hoje
+-- depois de criar o usuário admin no Auth:
+-- insert into public.admins (user_id) select id from auth.users where email = '<email>';
+
+-- popula com o lote atual (laudo L-087396/26, 83,5 pontos)
 insert into public.products (title, points, category, weight, intensity, acidez, corpo, description, mercado_livre_link)
 values
-  ('Caffè Ragi 85 Pontos — 250g', 85, 'especial', '250g', 4, 'Equilibrada', 'Encorpado', 'Chocolate, caramelo e frutas cítricas em um café encorpado e equilibrado.', '#'),
-  ('Caffè Ragi 85 Pontos — 500g', 85, 'especial', '500g', 4, 'Equilibrada', 'Encorpado', 'Chocolate, caramelo e frutas cítricas em um café encorpado e equilibrado.', '#'),
-  ('Caffè Ragi 75 Pontos — 250g', 75, 'gourmet', '250g', 3, 'Leve', 'Médio', 'Café tradicional, doçura suave e leve amargor para o dia a dia.', '#'),
-  ('Caffè Ragi 75 Pontos — 500g', 75, 'gourmet', '500g', 3, 'Leve', 'Médio', 'Café tradicional, doçura suave e leve amargor para o dia a dia.', '#')
+  ('Caffè Ragi Especial — 500g', 83.5, 'especial', '500g', 4, 'Cítrica', 'Encorpado', 'Notas de chocolate e frutas cítricas, doçura alta e xícara limpa. Lote avaliado com 83,5 pontos na escala SCA.', '#'),
+  ('Caffè Ragi Especial — 1kg', 83.5, 'especial', '1kg', 4, 'Cítrica', 'Encorpado', 'Notas de chocolate e frutas cítricas, doçura alta e xícara limpa. Lote avaliado com 83,5 pontos na escala SCA.', '#')
 on conflict do nothing;

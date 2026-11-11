@@ -4,7 +4,7 @@ const ITEMS = [
   { label: "100% Arábica" },
   { label: "Torra Artesanal" },
   { label: "Origem Minas Gerais" },
-  { label: "Pacotes de 250g a 500g" },
+  { label: "Pacotes de 500g e 1kg" },
 ];
 
 export default function TrustBar() {

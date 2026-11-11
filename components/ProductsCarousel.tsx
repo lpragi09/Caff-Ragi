@@ -44,7 +44,7 @@ export default function ProductsCarousel({ products }: { products: Product[] }) 
   }, []);
 
   return (
-    <div className="relative mt-8">
+    <div className="relative">
       <div
         ref={trackRef}
         className="scrollbar-hide flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-2"
@@ -52,7 +52,7 @@ export default function ProductsCarousel({ products }: { products: Product[] }) 
         {products.map((product) => (
           <div
             key={product.id}
-            className="w-[82%] flex-none snap-start sm:w-[60%] md:w-[45%] lg:w-[31%]"
+            className="w-[82%] flex-none snap-start sm:w-[60%] md:w-[45%] lg:w-[48%]"
           >
             <ProductCard product={product} />
           </div>

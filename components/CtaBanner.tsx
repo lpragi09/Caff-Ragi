@@ -6,12 +6,12 @@ export default function CtaBanner() {
     <section className="bg-ink">
       <div className="relative min-h-[420px] w-full overflow-hidden sm:min-h-[300px]">
         <Image
-          src="/images/bag-75-mug-lifestyle.webp"
-          alt="Xícara e pacote Caffè Ragi 75 pontos"
+          src="/images/cafe-ragi-500g.webp"
+          alt="Pacote de 500g do Caffè Ragi com xícara de café"
           fill
           sizes="100vw"
           quality={92}
-          className="object-cover object-[75%_center]"
+          className="object-cover object-[center_55%]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/80 to-ink/20 sm:bg-gradient-to-r sm:from-ink sm:via-ink/85 sm:to-ink/40" />
 

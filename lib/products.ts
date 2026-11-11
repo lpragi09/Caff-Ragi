@@ -1,5 +1,5 @@
 export type Category = "especial" | "gourmet";
-export type Weight = "250g" | "500g";
+export type Weight = "250g" | "500g" | "1kg";
 
 export type Product = {
   id: string;
@@ -20,17 +20,16 @@ export const CATEGORY_LABEL: Record<Category, string> = {
   gourmet: "Café Gourmet",
 };
 
-const IMAGE_MAP: Record<Category, Record<Weight, string>> = {
-  especial: {
-    "250g": "/images/cafe-especial-250g.webp",
-    "500g": "/images/cafe-especial-500g.webp",
-  },
-  gourmet: {
-    "250g": "/images/cafe-gourmet-250g.webp",
-    "500g": "/images/cafe-gourmet-500g.webp",
-  },
+// pesos vendidos hoje (os que aparecem no painel de admin)
+export const WEIGHTS_FOR_SALE: Weight[] = ["500g", "1kg"];
+
+// a embalagem é a mesma para o lote todo; muda só o peso
+const IMAGE_BY_WEIGHT: Record<Weight, string> = {
+  "250g": "/images/cafe-ragi-500g.webp",
+  "500g": "/images/cafe-ragi-500g.webp",
+  "1kg": "/images/cafe-ragi-1kg.webp",
 };
 
-export function getProductImage(category: Category, weight: Weight) {
-  return IMAGE_MAP[category][weight];
+export function getProductImage(weight: Weight) {
+  return IMAGE_BY_WEIGHT[weight] ?? IMAGE_BY_WEIGHT["500g"];
 }

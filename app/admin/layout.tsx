@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
+import { getAdmin } from "@/lib/supabase/admin";
 import { logout } from "@/app/admin/actions";
 
 export default async function AdminLayout({
@@ -7,10 +7,8 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const admin = await getAdmin();
+  const user = admin?.user;
 
   return (
     <div className="min-h-screen bg-ink text-cream">

@@ -38,7 +38,7 @@ const FEATURES = [
       />
     ),
     title: "Notas Selecionadas",
-    desc: "Perfil sensorial claro em cada pacote, do 75 ao 85 pontos.",
+    desc: "Lote com laudo sensorial: 83,5 pontos, notas de chocolate e cítricos.",
   },
 ];
 
@@ -61,8 +61,8 @@ export default function Hero() {
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-cream/70">
-              Duas torras, notas de sabor bem definidas e a tradição italiana no
-              nome. Do grão à xícara, pensado para quem exige qualidade em cada
+              Um café especial de 83,5 pontos, com notas de chocolate e frutas
+              cítricas e a tradição italiana no nome. Do grão à xícara, pensado para quem exige qualidade em cada
               detalhe.
             </p>
 
@@ -125,7 +125,7 @@ export default function Hero() {
             </span>
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/90 to-transparent p-6 pt-14">
               <p className="font-serif text-lg text-cream">
-                Duas torras, um só padrão de qualidade.
+                83,5 pontos na escala SCA.
               </p>
               <p className="mt-1 text-sm text-cream/70">
                 Notas claras, torra artesanal e origem rastreável em cada pacote.

@@ -30,13 +30,20 @@ export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isLoginPage = pathname === "/admin/login";
 
-  if (!user && pathname.startsWith("/admin") && !isLoginPage) {
+  let isAdmin = false;
+  if (user) {
+    const { data } = await supabase.rpc("is_admin");
+    isAdmin = data === true;
+  }
+
+  if (!isAdmin && pathname.startsWith("/admin") && !isLoginPage) {
     const url = request.nextUrl.clone();
     url.pathname = "/admin/login";
+    url.search = "";
     return NextResponse.redirect(url);
   }
 
-  if (user && isLoginPage) {
+  if (isAdmin && isLoginPage) {
     const url = request.nextUrl.clone();
     url.pathname = "/admin";
     return NextResponse.redirect(url);

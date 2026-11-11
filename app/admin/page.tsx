@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { CATEGORY_LABEL, type Product } from "@/lib/products";
+import { formatPoints } from "@/lib/lote";
 import { deleteProduct, toggleActive } from "@/app/admin/actions";
 
 export default async function AdminDashboard() {
@@ -39,7 +40,7 @@ export default async function AdminDashboard() {
           >
             <div>
               <p className="text-xs uppercase tracking-wide text-cream/40">
-                {CATEGORY_LABEL[product.category]} &middot; {product.points} Pontos &middot;{" "}
+                {CATEGORY_LABEL[product.category]} &middot; {formatPoints(Number(product.points))} Pontos &middot;{" "}
                 {product.weight} &middot; {product.active ? "Ativo" : "Oculto"}
               </p>
               <p className="mt-1 font-serif text-lg text-cream">{product.title}</p>

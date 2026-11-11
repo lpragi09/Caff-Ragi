@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { requireAdmin } from "@/lib/supabase/admin";
 import type { Category, Weight } from "@/lib/products";
 
 export async function login(formData: FormData) {
@@ -13,7 +14,13 @@ export async function login(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    redirect(`/admin/login?error=${encodeURIComponent(error.message)}`);
+    redirect(`/admin/login?error=${encodeURIComponent("E-mail ou senha inválidos.")}`);
+  }
+
+  const { data: isAdmin } = await supabase.rpc("is_admin");
+  if (isAdmin !== true) {
+    await supabase.auth.signOut();
+    redirect(`/admin/login?error=${encodeURIComponent("Esta conta não tem acesso ao painel.")}`);
   }
 
   redirect("/admin");
@@ -30,7 +37,7 @@ function productFromForm(formData: FormData) {
     title: String(formData.get("title") || ""),
     points: Number(formData.get("points") || 0),
     category: String(formData.get("category") || "especial") as Category,
-    weight: String(formData.get("weight") || "250g") as Weight,
+    weight: String(formData.get("weight") || "500g") as Weight,
     intensity: Number(formData.get("intensity") || 1),
     acidez: String(formData.get("acidez") || ""),
     corpo: String(formData.get("corpo") || ""),
@@ -41,7 +48,7 @@ function productFromForm(formData: FormData) {
 }
 
 export async function createProduct(formData: FormData) {
-  const supabase = await createClient();
+  const { supabase } = await requireAdmin();
   const { error } = await supabase.from("products").insert(productFromForm(formData));
 
   if (error) {
@@ -54,7 +61,7 @@ export async function createProduct(formData: FormData) {
 }
 
 export async function updateProduct(id: string, formData: FormData) {
-  const supabase = await createClient();
+  const { supabase } = await requireAdmin();
   const { error } = await supabase
     .from("products")
     .update(productFromForm(formData))
@@ -70,7 +77,7 @@ export async function updateProduct(id: string, formData: FormData) {
 }
 
 export async function deleteProduct(id: string) {
-  const supabase = await createClient();
+  const { supabase } = await requireAdmin();
   await supabase.from("products").delete().eq("id", id);
 
   revalidatePath("/");
@@ -78,7 +85,7 @@ export async function deleteProduct(id: string) {
 }
 
 export async function toggleActive(id: string, active: boolean) {
-  const supabase = await createClient();
+  const { supabase } = await requireAdmin();
   await supabase.from("products").update({ active }).eq("id", id);
 
   revalidatePath("/");
