@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { CATEGORY_LABEL, getProductImage, type Product } from "@/lib/products";
+import { CATEGORY_LABEL, MOAGEM_LABEL, getProductImage, type Product } from "@/lib/products";
 import { formatPoints } from "@/lib/lote";
 
 export function IntensityStars({ value }: { value: number }) {
@@ -25,15 +25,16 @@ export function IntensityStars({ value }: { value: number }) {
 
 export default function ProductCard({ product }: { product: Product }) {
   const hasLink = product.mercado_livre_link && product.mercado_livre_link !== "#";
+  const moagem = MOAGEM_LABEL[product.moagem ?? "moido"];
 
   return (
     <div className="group flex h-full flex-col overflow-hidden rounded-3xl border border-cream/10 bg-espresso/60 transition-colors hover:border-gold/30">
       <div className="relative aspect-[4/5] w-full overflow-hidden bg-espresso">
         <Image
           src={getProductImage(product.weight)}
-          alt={`Pacote ${product.weight} do ${product.title}`}
+          alt={`Pacote ${product.weight} do ${product.title} (${moagem.toLowerCase()})`}
           fill
-          sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
+          sizes="(min-width: 1280px) 22vw, (min-width: 640px) 45vw, 90vw"
           quality={90}
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
@@ -43,11 +44,15 @@ export default function ProductCard({ product }: { product: Product }) {
         <span className="absolute right-4 top-4 rounded-full bg-gold px-3 py-1.5 text-xs font-bold text-espresso">
           {product.weight}
         </span>
+        <span className="absolute bottom-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-ink/80 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wide text-cream backdrop-blur">
+          <span className="h-1.5 w-1.5 rounded-full bg-gold" aria-hidden />
+          {moagem}
+        </span>
       </div>
 
       <div className="flex flex-1 flex-col p-7">
         <p className="text-xs font-medium uppercase tracking-wide text-cream/45">
-          {CATEGORY_LABEL[product.category]} &middot; 100% arábica
+          {CATEGORY_LABEL[product.category]} &middot; {moagem}
         </p>
         <h3 className="mt-2 font-serif text-2xl text-cream">{product.title}</h3>
         <p className="mt-3 text-sm leading-relaxed text-cream/60">

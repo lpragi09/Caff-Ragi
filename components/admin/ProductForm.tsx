@@ -2,7 +2,15 @@
 
 import { useState } from "react";
 import ProductCard from "@/components/ProductCard";
-import { WEIGHTS_FOR_SALE, type Category, type Product, type Weight } from "@/lib/products";
+import {
+  MOAGEM_LABEL,
+  MOAGEM_OPTIONS,
+  WEIGHTS_FOR_SALE,
+  type Category,
+  type Moagem,
+  type Product,
+  type Weight,
+} from "@/lib/products";
 
 const CATEGORY_OPTIONS: { value: Category; label: string }[] = [
   { value: "especial", label: "Café Especial" },
@@ -26,6 +34,7 @@ export default function ProductForm({
   const [points, setPoints] = useState(initial?.points ?? 83.5);
   const [category, setCategory] = useState<Category>(initial?.category ?? "especial");
   const [weight, setWeight] = useState<Weight>(initial?.weight ?? "500g");
+  const [moagem, setMoagem] = useState<Moagem>(initial?.moagem ?? "moido");
   const [intensity, setIntensity] = useState(initial?.intensity ?? 3);
   const [acidez, setAcidez] = useState(initial?.acidez ?? "");
   const [corpo, setCorpo] = useState(initial?.corpo ?? "");
@@ -41,6 +50,7 @@ export default function ProductForm({
     points,
     category,
     weight,
+    moagem,
     intensity,
     acidez: acidez || "—",
     corpo: corpo || "—",
@@ -151,6 +161,27 @@ export default function ProductForm({
           <p className="text-xs text-cream/40">
             A imagem do anúncio é escolhida automaticamente pelo peso.
           </p>
+        </div>
+
+        <div className="flex flex-col gap-2 text-sm text-cream/70">
+          Moagem
+          <input type="hidden" name="moagem" value={moagem} />
+          <div className="flex gap-2">
+            {MOAGEM_OPTIONS.map((opt) => (
+              <button
+                key={opt}
+                type="button"
+                onClick={() => setMoagem(opt)}
+                className={`rounded-full border px-4 py-2 text-sm transition-colors ${
+                  moagem === opt
+                    ? "border-gold bg-gold text-espresso font-semibold"
+                    : "border-cream/15 text-cream/70 hover:border-cream/40"
+                }`}
+              >
+                {MOAGEM_LABEL[opt]}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">

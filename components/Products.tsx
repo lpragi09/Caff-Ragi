@@ -8,36 +8,30 @@ import type { Product } from "@/lib/products";
 const DESCRIPTION =
   "Notas de chocolate e frutas cítricas, doçura alta e xícara limpa. Lote avaliado com 83,5 pontos na escala SCA.";
 
-const FALLBACK_PRODUCTS: Product[] = [
-  {
-    id: "especial-500",
-    title: "Caffè Ragi Especial — 500g",
-    points: LOTE.pontuacao,
-    category: "especial",
-    weight: "500g",
-    intensity: 4,
-    acidez: "Cítrica",
-    corpo: "Encorpado",
-    description: DESCRIPTION,
-    mercado_livre_link: "#",
-    active: true,
-  },
-  {
-    id: "especial-1kg",
-    title: "Caffè Ragi Especial — 1kg",
-    points: LOTE.pontuacao,
-    category: "especial",
-    weight: "1kg",
-    intensity: 4,
-    acidez: "Cítrica",
-    corpo: "Encorpado",
-    description: DESCRIPTION,
-    mercado_livre_link: "#",
-    active: true,
-  },
+const FALLBACK_SIZES: { weight: Product["weight"]; moagem: NonNullable<Product["moagem"]> }[] = [
+  { weight: "500g", moagem: "moido" },
+  { weight: "500g", moagem: "graos" },
+  { weight: "1kg", moagem: "moido" },
+  { weight: "1kg", moagem: "graos" },
 ];
 
+const FALLBACK_PRODUCTS: Product[] = FALLBACK_SIZES.map(({ weight, moagem }) => ({
+  id: `especial-${weight}-${moagem}`,
+  title: `Caffè Ragi Especial — ${weight} ${moagem === "moido" ? "Moído" : "em Grãos"}`,
+  points: LOTE.pontuacao,
+  category: "especial",
+  weight,
+  moagem,
+  intensity: 4,
+  acidez: "Cítrica",
+  corpo: "Encorpado",
+  description: DESCRIPTION,
+  mercado_livre_link: "#",
+  active: true,
+}));
+
 const WEIGHT_ORDER: Record<string, number> = { "250g": 0, "500g": 1, "1kg": 2 };
+const MOAGEM_ORDER: Record<string, number> = { moido: 0, graos: 1 };
 
 async function getProducts(): Promise<Product[]> {
   try {
@@ -52,7 +46,8 @@ async function getProducts(): Promise<Product[]> {
     return (data as Product[]).sort(
       (a, b) =>
         Number(b.points) - Number(a.points) ||
-        (WEIGHT_ORDER[a.weight] ?? 9) - (WEIGHT_ORDER[b.weight] ?? 9)
+        (WEIGHT_ORDER[a.weight] ?? 9) - (WEIGHT_ORDER[b.weight] ?? 9) ||
+        (MOAGEM_ORDER[a.moagem ?? "moido"] ?? 9) - (MOAGEM_ORDER[b.moagem ?? "moido"] ?? 9)
     );
   } catch {
     return FALLBACK_PRODUCTS;
@@ -61,7 +56,7 @@ async function getProducts(): Promise<Product[]> {
 
 export default async function Products() {
   const products = await getProducts();
-  const useCarousel = products.length > 3;
+  const useCarousel = products.length > 4;
 
   return (
     <section id="produtos" className="bg-ink py-24">
@@ -76,8 +71,8 @@ export default async function Products() {
           </h2>
           <p className="mt-4 max-w-xl text-cream/65">
             Lote único do sul de Minas, com laudo sensorial: chocolate e frutas
-            cítricas, doçura e xícara limpa. Escolha o tamanho que combina com a
-            sua rotina.
+            cítricas, doçura e xícara limpa. Em grãos ou moído, em pacotes de
+            500g e 1kg.
           </p>
         </Reveal>
 
@@ -85,7 +80,7 @@ export default async function Products() {
           {useCarousel ? (
             <ProductsCarousel products={products} />
           ) : (
-            <div className="grid gap-6 sm:grid-cols-2 lg:max-w-4xl">
+            <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
               {products.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}

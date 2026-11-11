@@ -6,6 +6,7 @@ create table if not exists public.products (
   points numeric(4,2) not null check (points between 0 and 100),
   category text not null check (category in ('especial', 'gourmet')),
   weight text not null check (weight in ('250g', '500g', '1kg')),
+  moagem text not null default 'moido' check (moagem in ('moido', 'graos')),
   intensity smallint not null check (intensity between 1 and 5),
   acidez text not null,
   corpo text not null,

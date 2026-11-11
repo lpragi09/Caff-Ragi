@@ -1,5 +1,6 @@
 export type Category = "especial" | "gourmet";
 export type Weight = "250g" | "500g" | "1kg";
+export type Moagem = "moido" | "graos";
 
 export type Product = {
   id: string;
@@ -7,6 +8,7 @@ export type Product = {
   points: number;
   category: Category;
   weight: Weight;
+  moagem?: Moagem;
   intensity: number;
   acidez: string;
   corpo: string;
@@ -14,6 +16,13 @@ export type Product = {
   mercado_livre_link: string;
   active: boolean;
 };
+
+export const MOAGEM_LABEL: Record<Moagem, string> = {
+  moido: "Moído",
+  graos: "Em grãos",
+};
+
+export const MOAGEM_OPTIONS: Moagem[] = ["moido", "graos"];
 
 export const CATEGORY_LABEL: Record<Category, string> = {
   especial: "Café Especial",

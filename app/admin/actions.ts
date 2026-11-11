@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/supabase/admin";
-import type { Category, Weight } from "@/lib/products";
+import type { Category, Moagem, Weight } from "@/lib/products";
 
 export async function login(formData: FormData) {
   const email = String(formData.get("email") || "");
@@ -38,6 +38,7 @@ function productFromForm(formData: FormData) {
     points: Number(formData.get("points") || 0),
     category: String(formData.get("category") || "especial") as Category,
     weight: String(formData.get("weight") || "500g") as Weight,
+    moagem: (formData.get("moagem") === "graos" ? "graos" : "moido") as Moagem,
     intensity: Number(formData.get("intensity") || 1),
     acidez: String(formData.get("acidez") || ""),
     corpo: String(formData.get("corpo") || ""),
