@@ -13,7 +13,7 @@ const serif = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://caff-ragi.vercel.app"),
+  metadataBase: new URL("https://caferagi.com.br"),
   title: "Caffè Ragi | Três Pontas - MG",
   description:
     "Café especial 100% arábica, torrado artesanalmente em Três Pontas - Minas Gerais. Lote de 83,5 pontos com notas de chocolate e frutas cítricas, em pacotes de 500g e 1kg.",
